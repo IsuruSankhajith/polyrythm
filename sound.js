@@ -9,10 +9,10 @@ function playSound(frequency = 440, duration = 1){
     enevelope.gain.setTargetAtTime(0, audioCtx.currentTime);
     enevelope.gain.linearRampToValueAtTime(1,audioCtx.currentTime + 0.05); 
     enevelope.gain.linearRampToValueAtTime(0,audioCtx.currentTime + duration);
-    
+
 
     osc.frequency.setValueAtTime(frequency, audioCtx.currentTime);
 
-    //osc.start();
+    osc.start();
     osc.stop(audioCtx.currentTime + duration); 
 }

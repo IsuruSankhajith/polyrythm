@@ -18,23 +18,43 @@
 
         // Define the center and radius
         const trackCenter = { x: size / 2, y: size / 2 };
-        const trackRadius = 100;
-        const ballRadius = 10; // Define ball radius
-        const ballSpeed = 0.1; // Define ball speed
+        const trackMinRadius = 100;
+        const trackStep = 20; // Distance between consecutive tracks
+        const ballRadius = 10; // Ball radius
+        const ballSpeed = 0.05; // Ball speed (radians per frame)
+        const ballSpeedStep = -0.0001; 
+
+        const soundFrequencies = [
+            1760, 1567.98
+        ];
+
+        // Arrays for tracks and balls
+        const tracks = [];
+        const balls = [];
+        const N = 10; // Number of tracks and balls
+
+        // Create tracks and balls
+        for (let i = 0; i < N; i++) {
+            const trackRadius = trackMinRadius + i * trackStep;
+            const ballSpeed = ballMindspeed + i * ballSpeedStep 
+            const ballsoundFrequncy = soundFrequencies[i]; 
+            const track = new Track(trackCenter, trackRadius);
+            const ball = new Ball(track, ballRadius, ballSpeed + i * 0.01); // Slightly different speeds
+            tracks.push(track);
+            balls.push(ball);
+        }
 
         // Get the canvas context
         const ctx = myCanvas.getContext("2d");
 
-        // Create the track and ball
-        const track = new Track(trackCenter, trackRadius);
-        const ball = new Ball(track, ballRadius, ballSpeed);
-
         // Animation loop
         function animate() {
             ctx.clearRect(0, 0, size, size); // Clear canvas
-            track.draw(ctx); // Draw the track
-            ball.move(); // Update ball position
-            ball.draw(ctx); // Draw the ball
+            tracks.forEach((track) => track.draw(ctx)); // Draw all tracks
+            balls.forEach((ball) => {
+                ball.move(); // Update ball position
+                ball.draw(ctx); // Draw ball
+            });
             requestAnimationFrame(animate); // Loop
         }
 
@@ -43,3 +63,6 @@
     </script>
 </body>
 </html>
+
+
+
