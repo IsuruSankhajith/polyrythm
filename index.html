@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Polyrhythm</title>
+</head>
+<body>
+    <canvas id="myCanvas" style="background-color: black;"></canvas>
+    <script src="sound.js"></script>
+    <script src="track.js"></script>
+    <script src="ball.js"></script>
+    <script>
+        const size = 700;
+
+        // Set the canvas size
+        const myCanvas = document.getElementById("myCanvas");
+        myCanvas.width = size;
+        myCanvas.height = size;
+
+        // Define the center and radius
+        const trackCenter = { x: size / 2, y: size / 2 };
+        const trackRadius = 100;
+        const ballRadius = 10; // Define ball radius
+        const ballSpeed = 0.1; // Define ball speed
+
+        // Get the canvas context
+        const ctx = myCanvas.getContext("2d");
+
+        // Create the track and ball
+        const track = new Track(trackCenter, trackRadius);
+        const ball = new Ball(track, ballRadius, ballSpeed);
+
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, size, size); // Clear canvas
+            track.draw(ctx); // Draw the track
+            ball.move(); // Update ball position
+            ball.draw(ctx); // Draw the ball
+            requestAnimationFrame(animate); // Loop
+        }
+
+        // Start animation
+        animate();
+    </script>
+</body>
+</html>
